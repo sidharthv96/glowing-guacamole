@@ -1,0 +1,11 @@
+{
+  "name": "glowing-guacamole",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/sidharthv96/glowing-guacamole.git",
+  "author": "Sidharth Vinod <sidharthv96@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.16.2"
+  }
+}
