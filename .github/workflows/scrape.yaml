@@ -1,0 +1,16 @@
+name: Scrape
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Scrape
+        run: |
+          docker run --rm -it --ipc=host --user pwuser --security-opt seccomp=seccomp_profile.json $(docker build -q .) npx playwright test
