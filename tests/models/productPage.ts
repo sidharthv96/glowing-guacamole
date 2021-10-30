@@ -1,20 +1,16 @@
 import { Page } from "@playwright/test";
-export interface ProductDetails {
-  title: string;
-  link: string;
-  description: string;
-  price: string;
-}
+import { PageDetails, ProductDetails } from "./types";
 
 export class ProductPage {
   constructor(private readonly page: Page) {}
 
-  async scrapeDetails(url: string): Promise<ProductDetails[]> {
+  async scrapeDetails(url: string): Promise<PageDetails> {
     const websiteURL = new URL(url);
     const domain = `${websiteURL.protocol}//${websiteURL.hostname}`;
+    console.log(`Scraping ${url}`);
     await this.page.goto(url);
     const thumbnails = this.page.locator(".thumbnail");
-    const count = await thumbnails.count();
+    let count = await thumbnails.count();
 
     const details: ProductDetails[] = [];
     for (let i = 0; i < count; i++) {
@@ -32,6 +28,20 @@ export class ProductPage {
       };
       details.push(data);
     }
-    return details;
+
+    const sideMenuLinks = this.page.locator("#side-menu a");
+    count = await sideMenuLinks.count();
+    const links: string[] = [];
+    for (let i = 0; i < count; i++) {
+      const element = sideMenuLinks.nth(i);
+      links.push(domain + (await element.getAttribute("href")));
+    }
+    console.log(`Got ${details.length} products.`);
+
+    return {
+      url,
+      products: details,
+      navLinks: links,
+    };
   }
 }
