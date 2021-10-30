@@ -11,7 +11,7 @@ export class ProductPage {
 
   async scrapeDetails(url: string): Promise<ProductDetails[]> {
     const websiteURL = new URL(url);
-    const domain = websiteURL.protocol + websiteURL.hostname;
+    const domain = `${websiteURL.protocol}//${websiteURL.hostname}`;
     await this.page.goto(url);
     const thumbnails = this.page.locator(".thumbnail");
     const count = await thumbnails.count();
