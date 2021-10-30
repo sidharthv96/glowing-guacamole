@@ -1,10 +1,3 @@
-export interface WebsiteDetails {
-  pages: {
-    url: string;
-    products: ProductDetails[];
-  }[];
-}
-
 export interface PageDetails {
   products: ProductDetails[];
   url: string;

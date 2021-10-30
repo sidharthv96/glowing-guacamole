@@ -9,20 +9,15 @@ export class Website {
   }
 
   async scrapeAllProducts(url: string): Promise<PageDetails[]> {
-    const websiteURL = new URL(url);
-    const domain = `${websiteURL.protocol}//${websiteURL.hostname}`;
     await this.page.goto(url);
     const { navLinks } = await this.productPage.scrapeDetails(url);
-
     const details: PageDetails[] = [];
     const links: string[] = navLinks;
-
     for (const link of links) {
       const data = await this.productPage.scrapeDetails(link);
       details.push(data);
       links.push(...data.navLinks.filter((x) => !links.includes(x)));
     }
-
     return details;
   }
 }
