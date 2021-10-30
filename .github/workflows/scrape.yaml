@@ -13,4 +13,4 @@ jobs:
 
       - name: Scrape
         run: |
-          docker run --rm -it --ipc=host --user pwuser --security-opt seccomp=seccomp_profile.json $(docker build -q .) npx playwright test
+          docker run --rm --ipc=host --user pwuser --security-opt seccomp=seccomp_profile.json $(docker build -q .) npx playwright test
